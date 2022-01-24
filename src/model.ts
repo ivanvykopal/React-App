@@ -11,6 +11,7 @@ export interface Order {
     orderDate: Date,
     amount: number,
     numberOfProducts: number,
+    customerID?: number
 }
 
 export interface HeadProperty {

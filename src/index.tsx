@@ -1,16 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import MainPage from './components/MainPage'
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import DetailPage from './components/DetailPage';
+import App from './App';
 
 ReactDOM.render(
-  <BrowserRouter>
-    <Routes>
-      <Route path="/:index" element={<DetailPage />} />
-      <Route path="/" element={<MainPage />} />
-    </Routes>
-  </BrowserRouter>,
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
   document.getElementById('root')
 );
 

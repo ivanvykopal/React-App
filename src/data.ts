@@ -30,29 +30,34 @@ export const orders: Order[] = [
         orderDate: new Date("2022-01-20"),
         amount: 4390.78,
         numberOfProducts: 8,
+        customerID: 1
     },
     {
         id: 2,
         orderDate: new Date("2022-01-20"),
         amount: 4390.78,
         numberOfProducts: 8,
+        customerID: 1
     },
     {
         id: 3,
         orderDate: new Date("2022-01-20"),
         amount: 4390.78,
         numberOfProducts: 8,
+        customerID: 1
     },
     {
         id: 4,
         orderDate: new Date("2022-01-20"),
         amount: 4390.78,
         numberOfProducts: 8,
+        customerID: 1
     },
     {
         id: 5,
         orderDate: new Date("2022-01-20"),
         amount: 4390.78,
         numberOfProducts: 8,
+        customerID: 1
     },
 ]
