@@ -29,13 +29,14 @@ export const customerColumns: ColumnConfig<Customer>[] = [
   {
     property: 'name',
     header: 'Meno',
+    align: "start"
   },
   {
     property: 'dateOfBirth',
     header: 'Dátum narodenia',
     render: (datum) =>
       datum.dateOfBirth && new Date(datum.dateOfBirth).toLocaleDateString("sk-SK"),
-    align: "end"
+    align: "center"
   },
   {
     property: 'vip',

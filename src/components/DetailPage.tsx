@@ -1,14 +1,15 @@
 
 import { Grommet, Box, DataTable, Header, Footer, Button, ColumnConfig } from 'grommet';
 import { grommet } from 'grommet/themes';
-import { Github, User, Checkmark, Close } from 'grommet-icons';
-import { Link } from 'react-router-dom';
-import { customers, orders } from '../data'
-import { customerColumns, orderColumns } from '../columns'
+import { Github, User, } from 'grommet-icons';
+import { useSearchParams } from 'react-router-dom';
+import { orders } from '../data'
+import { orderColumns } from '../columns'
 import { useEffect } from 'react';
 
 
 export default () => {
+    const [searchParams, setSearchParams] = useSearchParams();
 
     return (
         <Grommet theme={grommet}>

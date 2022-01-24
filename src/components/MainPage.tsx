@@ -2,11 +2,12 @@
 import { Grommet, Box, DataTable, Header, Footer, Button, ColumnConfig } from 'grommet';
 import { grommet } from 'grommet/themes';
 import { Github } from 'grommet-icons';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { customers } from '../data'
 import { customerColumns } from '../columns'
 
 export default () => {
+  const navigate = useNavigate();
 
   return (
     <Grommet theme={grommet}>
@@ -18,7 +19,7 @@ export default () => {
         <DataTable
           columns={customerColumns}
           data={customers}
-          onClickRow={(datum) => <Link to={'/' + datum.datum.id} ></Link>}
+          onClickRow={(datum) => navigate('/index=' + datum.datum.id)}
         />
       </Box>
 
