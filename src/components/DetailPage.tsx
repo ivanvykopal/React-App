@@ -1,11 +1,13 @@
 
-import { Grommet, Box, DataTable, Header, Footer, Button, ColumnConfig } from 'grommet';
+import { Grommet, Box, DataTable } from 'grommet';
 import { grommet } from 'grommet/themes';
-import { Github, User, } from 'grommet-icons';
+import { User, } from 'grommet-icons';
 import { useSearchParams } from 'react-router-dom';
 import { orders } from '../data'
 import { orderColumns } from '../columns'
 import { useEffect } from 'react';
+import Footer from './Footer';
+import Header from './Header';
 
 
 export default () => {
@@ -14,9 +16,7 @@ export default () => {
     return (
         <Grommet theme={grommet}>
 
-            <Header background="black" pad='small'>
-                <h1>Detail zákazníka</h1>
-            </Header>
+            <Header text='Detail zákazníka' />
 
             <Box border={{ color: 'black', size: 'medium' }} align='center' pad='medium' direction='row' justify='center'>
                 <User size='large' />
@@ -35,10 +35,7 @@ export default () => {
                 />
             </Box>
 
-
-            <Footer background="black" pad="medium" justify='center'>
-                <Button icon={<Github />} hoverIndicator href='https://github.com/ivanvykopal/React-App' label='Github' />
-            </Footer>
+            <Footer />
         </Grommet>
     );
 }

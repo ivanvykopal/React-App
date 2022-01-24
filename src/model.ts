@@ -13,3 +13,7 @@ export interface Order {
     numberOfProducts: number,
 }
 
+export interface HeadProperty {
+    text: string
+}
+

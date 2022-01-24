@@ -1,10 +1,11 @@
 
-import { Grommet, Box, DataTable, Header, Footer, Button, ColumnConfig } from 'grommet';
+import { Grommet, Box, DataTable } from 'grommet';
 import { grommet } from 'grommet/themes';
-import { Github } from 'grommet-icons';
 import { useNavigate } from 'react-router-dom';
 import { customers } from '../data'
 import { customerColumns } from '../columns'
+import Footer from './Footer';
+import Header from './Header';
 
 export default () => {
   const navigate = useNavigate();
@@ -12,9 +13,7 @@ export default () => {
   return (
     <Grommet theme={grommet}>
 
-      <Header background="black" pad='small'>
-        <h1>Iteria Zadanie</h1>
-      </Header>
+      <Header text='Zoznam zákazníkov' />
       <Box align="center" pad="large">
         <DataTable
           columns={customerColumns}
@@ -23,9 +22,7 @@ export default () => {
         />
       </Box>
 
-      <Footer background="black" pad="medium" justify='center'>
-        <Button icon={<Github />} hoverIndicator href='https://github.com/ivanvykopal/React-App' label='Github' />
-      </Footer>
+      <Footer />
     </Grommet>
   );
 }
