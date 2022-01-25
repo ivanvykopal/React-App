@@ -2,7 +2,7 @@ import { Button, Header, Menu } from "grommet"
 import { Home } from "grommet-icons"
 import { useNavigate } from "react-router-dom";
 
-export default () => {
+const MyHeader = () => {
     const navigate = useNavigate();
 
     return (
@@ -17,3 +17,5 @@ export default () => {
         </Header>
     )
 }
+
+export default MyHeader;

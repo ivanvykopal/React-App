@@ -5,7 +5,7 @@ import { ApolloProvider } from '@apollo/client';
 import { useState } from 'react';
 import { createApolloClient } from './tools/apolloClient'
 
-export default () => {
+const App = () => {
     const [client] = useState(createApolloClient());
 
     return (
@@ -19,3 +19,5 @@ export default () => {
         </ApolloProvider>
     )
 }
+
+export default App;

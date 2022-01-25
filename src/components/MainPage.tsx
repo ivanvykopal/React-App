@@ -28,7 +28,7 @@ const MainPageQuery = () => {
 };
 
 function existProps(props: Props) {
-  if (props.customers.length == 0) {
+  if (props.customers.length === 0) {
     return <Loading />
   }
   return (
