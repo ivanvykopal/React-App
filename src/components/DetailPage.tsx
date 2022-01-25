@@ -2,7 +2,7 @@ import { Grommet, Box, DataTable, Heading } from 'grommet';
 import { grommet } from 'grommet/themes';
 import { User, } from 'grommet-icons';
 import { useParams } from 'react-router-dom';
-import { orderColumns } from '../tools/columns'
+import { creteOrderColumns } from '../tools/columns'
 import Footer from './Footer';
 import Header from './Header';
 import { GET_ORDERS } from '../tools/queries';
@@ -68,6 +68,9 @@ function existProps(props: Props) {
 
 const DetailPage = (props: Props) => {
 
+    let total: number = 0;
+    props.orders.forEach((element) => { total += element.amount });
+
     return (
         <Grommet theme={grommet} full>
 
@@ -81,7 +84,7 @@ const DetailPage = (props: Props) => {
 
             <Box align="left" pad="large" justify='center'>
                 <DataTable
-                    columns={orderColumns}
+                    columns={creteOrderColumns(total)}
                     data={props.orders}
                 />
             </Box>

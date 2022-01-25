@@ -35,29 +35,31 @@ export const customerColumns: ColumnConfig<CustomerAmout>[] = [
   }
 ];
 
-export const orderColumns: ColumnConfig<Order>[] = [
-  {
-    property: 'id',
-    header: 'ID',
-    primary: true,
-  },
-  {
-    property: 'orderDate',
-    header: 'Dátum objednania',
-    render: (datum) =>
-      datum.orderDate && convertTimestamp(datum.orderDate),
-    align: "center"
-  },
-  {
-    property: 'numberOfProducts',
-    header: 'Počet produktov',
-    align: 'end'
-  },
-  {
-    property: 'amount',
-    header: 'Celková suma',
-    render: (datum) => priceFormat(datum.amount),
-    footer: priceFormat(1000),
-    align: 'end'
-  }
-];
+export function creteOrderColumns(total: number): ColumnConfig<Order>[] {
+  return [
+    {
+      property: 'id',
+      header: 'ID',
+      primary: true,
+    },
+    {
+      property: 'orderDate',
+      header: 'Dátum objednania',
+      render: (datum) =>
+        datum.orderDate && convertTimestamp(datum.orderDate),
+      align: "center"
+    },
+    {
+      property: 'numberOfProducts',
+      header: 'Počet produktov',
+      align: 'end'
+    },
+    {
+      property: 'amount',
+      header: 'Celková suma',
+      render: (datum) => priceFormat(datum.amount),
+      footer: priceFormat(total),
+      align: 'end'
+    }
+  ];
+}
