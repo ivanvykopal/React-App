@@ -1,18 +1,6 @@
 import { ColumnConfig } from "grommet";
-import { ReactElement } from "react";
-import { Checkmark, Close, Icon } from 'grommet-icons';
 import { Customer, CustomerAmout, Order, } from './model'
-
-function priceFormat(totalAmount: number): string {
-  return totalAmount.toFixed(2) + ' €'
-}
-
-function isVip(data: Customer): ReactElement<Icon> {
-  if (data.vip) {
-    return <Checkmark />
-  }
-  return <Close />
-}
+import { convertDate, convertTimestamp, isVip, priceFormat } from "./helpers";
 
 export const customerColumns: ColumnConfig<CustomerAmout>[] = [
   {
@@ -29,14 +17,14 @@ export const customerColumns: ColumnConfig<CustomerAmout>[] = [
     property: 'dateOfBirth',
     header: 'Dátum narodenia',
     render: (datum) =>
-      datum.dateOfBirth && new Date(datum.dateOfBirth).toLocaleDateString("sk-SK"),
+      datum.dateOfBirth && convertDate(datum.dateOfBirth),
     align: "center"
   },
   {
     property: 'vip',
     header: 'VIP',
     render: (data: Customer) => (
-      isVip(data)
+      isVip(data.vip)
     )
   },
   {
@@ -57,18 +45,19 @@ export const orderColumns: ColumnConfig<Order>[] = [
     property: 'orderDate',
     header: 'Dátum objednania',
     render: (datum) =>
-      datum.orderDate && new Date(datum.orderDate).toLocaleDateString("sk-SK"),
+      datum.orderDate && convertTimestamp(datum.orderDate),
     align: "center"
-  },
-  {
-    property: 'amount',
-    header: 'Celková suma',
-    render: (datum) => priceFormat(datum.amount),
-    align: 'end'
   },
   {
     property: 'numberOfProducts',
     header: 'Počet produktov',
     align: 'end'
   },
+  {
+    property: 'amount',
+    header: 'Celková suma',
+    render: (datum) => priceFormat(datum.amount),
+    footer: priceFormat(1000),
+    align: 'end'
+  }
 ];

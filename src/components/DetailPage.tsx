@@ -8,6 +8,8 @@ import Header from './Header';
 import { GET_ORDERS } from '../tools/queries';
 import { useSubscription } from '@apollo/client';
 import { CustomerOrder } from '../tools/model';
+import Loading from './Loading';
+import { convertDate, isVip } from '../tools/helpers';
 
 interface Props {
     orders: CustomerOrder[]
@@ -31,21 +33,33 @@ const DetailPageQuery = () => {
 function existProps(props: Props) {
     if (props.orders.length > 0) {
         return (
-            <Box border={{ color: 'black', size: 'medium' }} align='center' pad='small' direction='row' justify='center'>
-                <User size='large' />
-                <Heading level={3}>{props.orders[0].customer.id}</Heading>
-                <Heading level={3}>{props.orders[0].customer.name}</Heading>
-                <Heading level={3}>{props.orders[0].customer.dateOfBirth}</Heading>
-                <Heading level={3}>{props.orders[0].customer.vip}</Heading>
+            <Box justify='center' align='center'>
+                <Box border={{ color: 'black', size: 'medium' }} justify='center' round='medium' margin='medium' direction='column' align='center' height='medium' width='medium'>
+                    <User size='large' />
+                    <Box align='left'>
+                        <Heading level={3}>ID: {props.orders[0].customer.id}</Heading>
+                        <Heading level={3}>Meno: {props.orders[0].customer.name}</Heading>
+                        <Heading level={3}>Dátum narodenia: {convertDate(props.orders[0].customer.dateOfBirth)}</Heading>
+                        <Heading level={3}>VIP: {isVip(props.orders[0].customer.vip)}</Heading>
+                    </Box>
+                </Box >
             </Box>
         )
 
     }
     return (
         <div>
-            <Heading level='4' margin='medium'>Načítava...</Heading>
-            <Box border={{ color: 'black', size: 'medium' }} align='center' pad='small' direction='row' justify='center'>
-                <User size='large' />
+            <Loading />
+            <Box justify='center' align='center'>
+                <Box border={{ color: 'black', size: 'medium' }} justify='center' round='medium' margin='medium' direction='column' align='center' height='medium' width='medium'>
+                    <User size='large' />
+                    <Box align='left'>
+                        <Heading level={3}>ID: </Heading>
+                        <Heading level={3}>Meno: </Heading>
+                        <Heading level={3}>Dátum narodenia: </Heading>
+                        <Heading level={3}>VIP: </Heading>
+                    </Box>
+                </Box>
             </Box>
 
         </div>
@@ -55,15 +69,17 @@ function existProps(props: Props) {
 const DetailPage = (props: Props) => {
 
     return (
-        <Grommet theme={grommet}>
+        <Grommet theme={grommet} full>
 
-            <Header text='Detail zákazníka' />
+            <Header />
 
             {existProps(props)}
 
-            <Heading level={2}>Objednávky</Heading>
+            <Box align='center' border={{ color: 'black', side: 'bottom' }}>
+                <Heading level={2}>Objednávky</Heading>
+            </Box>
 
-            <Box align="center" pad="large">
+            <Box align="left" pad="large" justify='center'>
                 <DataTable
                     columns={orderColumns}
                     data={props.orders}

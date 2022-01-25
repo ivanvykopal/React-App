@@ -14,10 +14,6 @@ export interface Order {
     customerID?: number,
 }
 
-export interface HeadProperty {
-    text: string
-}
-
 export interface CustomerOrder extends Order {
     customer: Customer
 }

@@ -1,12 +1,19 @@
-import { Button, Header } from "grommet"
+import { Button, Header, Menu } from "grommet"
 import { Home } from "grommet-icons"
-import { HeadProperty } from "../tools/model"
+import { useNavigate } from "react-router-dom";
 
-export default (props: HeadProperty) => {
+export default () => {
+    const navigate = useNavigate();
+
     return (
         <Header background="black" pad='small'>
             <Button icon={<Home />} hoverIndicator href='/' size="large" />
-            <h2>{props.text}</h2>
+            <Menu label='Admin'
+                items={[
+                    { label: 'Zoznam zákazníkov', onClick: () => navigate('/') },
+                    { label: 'Detail zákazníka', onClick: () => navigate('/1') }
+                ]}
+            ></Menu>
         </Header>
     )
 }

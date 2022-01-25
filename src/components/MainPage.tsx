@@ -1,4 +1,4 @@
-import { Grommet, Box, DataTable, Heading } from 'grommet';
+import { Grommet, Box, DataTable, Grid, Heading, Text } from 'grommet';
 import { grommet } from 'grommet/themes';
 import { useNavigate } from 'react-router-dom';
 import { customerColumns } from '../tools/columns'
@@ -6,7 +6,8 @@ import Footer from './Footer';
 import Header from './Header';
 import { useSubscription } from "@apollo/client";
 import { GET_CUSTOMERS } from '../tools/queries';
-import { Customer, CustomerAmout } from '../tools/model';
+import { CustomerAmout } from '../tools/model';
+import Loading from './Loading';
 
 interface Props {
   customers: CustomerAmout[]
@@ -20,7 +21,7 @@ const MainPageQuery = () => {
   }
   if (error) {
     console.error(error);
-    return <span>Error!</span>;
+    return <Text>Error!</Text>;
   }
 
   return <MainPage customers={data.customers} />;
@@ -28,31 +29,38 @@ const MainPageQuery = () => {
 
 function existProps(props: Props) {
   if (props.customers.length == 0) {
-    return <Heading level='4' margin='medium'>Načítava...</Heading>
+    return <Loading />
   }
-  return null
+  return (
+    <Box></Box>
+  )
 }
 
 const MainPage = (props: Props) => {
   const navigate = useNavigate();
 
   return (
-    <Grommet theme={grommet}>
+    <Grommet theme={grommet} full>
+      <Grid fill rows={["auto", "auto", "flex", "auto", "auto"]}>
+        <Header />
 
-      <Header text='Zoznam zákazníkov' />
+        <Box align='center' justify='center' border={{ color: 'black', side: 'bottom' }}>
+          <Heading level='2'>Zoznam zákazníkov</Heading>
+        </Box>
 
-      {existProps(props)}
+        <Box align='left' pad='large'>
+          <DataTable
+            columns={customerColumns}
+            data={props.customers}
+            onClickRow={(datum) => navigate('/' + datum.datum.id)}
+          />
+        </Box>
 
-      <Box align="center" pad="large">
-        <DataTable
-          columns={customerColumns}
-          data={props.customers}
-          onClickRow={(datum) => navigate('/' + datum.datum.id)}
-        />
-      </Box>
+        {existProps(props)}
 
-      <Footer />
-    </Grommet>
+        <Footer />
+      </Grid>
+    </Grommet >
   );
 }
 
