@@ -1,17 +1,11 @@
 import { ColumnConfig } from "grommet";
 import { ReactElement } from "react";
 import { Checkmark, Close, Icon } from 'grommet-icons';
-import { Customer, Order, } from './model'
+import { Customer, CustomerAmout, Order, } from './model'
 
 function priceFormat(totalAmount: number): string {
   return totalAmount.toFixed(2) + ' €'
 }
-
-const amountFormatter = new Intl.NumberFormat("sk-SK", {
-  style: "currency",
-  currency: "EUR",
-  minimumFractionDigits: 2
-});
 
 function isVip(data: Customer): ReactElement<Icon> {
   if (data.vip) {
@@ -20,7 +14,7 @@ function isVip(data: Customer): ReactElement<Icon> {
   return <Close />
 }
 
-export const customerColumns: ColumnConfig<Customer>[] = [
+export const customerColumns: ColumnConfig<CustomerAmout>[] = [
   {
     property: 'id',
     header: 'ID',
@@ -46,9 +40,9 @@ export const customerColumns: ColumnConfig<Customer>[] = [
     )
   },
   {
-    property: 'totalAmount',
+    property: 'orders_aggregate.aggregate.sum.amount',
     header: 'Suma objednávok',
-    render: (datum) => priceFormat(datum.totalAmount),
+    render: (datum) => priceFormat(datum.orders_aggregate.aggregate.sum.amount),
     align: "end"
   }
 ];

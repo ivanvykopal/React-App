@@ -1,4 +1,4 @@
-import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
+import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { WebSocketLink } from "@apollo/client/link/ws";
 
 export const createApolloClient = () => {
@@ -9,7 +9,7 @@ export const createApolloClient = () => {
                 reconnect: true,
                 connectionParams: {
                     headers: {
-                        'x-hasura-admin-secret': 'text'
+                        'x-hasura-admin-secret': 'eUmyqPMsjIjvueOwRA4BkwGK1pHPgu0zL15bMWIKRrmkc0ga3vb4Hq2oIx7yqr9r'
                     }
                 }
             }

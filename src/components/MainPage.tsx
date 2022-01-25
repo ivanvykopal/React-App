@@ -1,20 +1,22 @@
-import React, { useEffect, Fragment, useState } from "react";
-import { Grommet, Box, DataTable } from 'grommet';
+import { Grommet, Box, DataTable, Heading } from 'grommet';
 import { grommet } from 'grommet/themes';
 import { useNavigate } from 'react-router-dom';
-import { customerColumns } from '../columns'
+import { customerColumns } from '../tools/columns'
 import Footer from './Footer';
 import Header from './Header';
 import { useSubscription } from "@apollo/client";
-import { GET_CUSTOMERS } from '../queries';
-import { Customer } from '../model';
+import { GET_CUSTOMERS } from '../tools/queries';
+import { Customer, CustomerAmout } from '../tools/model';
+
+interface Props {
+  customers: CustomerAmout[]
+}
 
 const MainPageQuery = () => {
   const { loading, error, data } = useSubscription(GET_CUSTOMERS);
 
-
   if (loading) {
-    return <span>Loading...</span>;
+    return <MainPage customers={[]} />;
   }
   if (error) {
     console.error(error);
@@ -24,31 +26,27 @@ const MainPageQuery = () => {
   return <MainPage customers={data.customers} />;
 };
 
-const MainPage = (props: any) => {
+function existProps(props: Props) {
+  if (props.customers.length == 0) {
+    return <Heading level='4' margin='medium'>Načítava...</Heading>
+  }
+  return null
+}
+
+const MainPage = (props: Props) => {
   const navigate = useNavigate();
-
-  let data: Customer[] = [];
-
-  props.customers.forEach((element: any) => {
-    data.push(
-      {
-        id: element.id,
-        name: element.name,
-        dateOfBirth: element.dateOfBirth,
-        vip: element.vip,
-        totalAmount: element.orders_aggregate.aggregate.sum.amount,
-      },
-    )
-  });
 
   return (
     <Grommet theme={grommet}>
 
       <Header text='Zoznam zákazníkov' />
+
+      {existProps(props)}
+
       <Box align="center" pad="large">
         <DataTable
           columns={customerColumns}
-          data={data}
+          data={props.customers}
           onClickRow={(datum) => navigate('/' + datum.datum.id)}
         />
       </Box>

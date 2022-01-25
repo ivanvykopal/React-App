@@ -11,10 +11,23 @@ export interface Order {
     orderDate: Date,
     amount: number,
     numberOfProducts: number,
-    customerID?: number
+    customerID?: number,
 }
 
 export interface HeadProperty {
     text: string
 }
 
+export interface CustomerOrder extends Order {
+    customer: Customer
+}
+
+export interface CustomerAmout extends Customer {
+    orders_aggregate: {
+        aggregate: {
+            sum: {
+                amount: number
+            }
+        }
+    }
+}

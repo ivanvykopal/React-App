@@ -3,9 +3,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import DetailPage from './components/DetailPage';
 import { ApolloProvider } from '@apollo/client';
 import { useState } from 'react';
-import { createApolloClient } from './client'
+import { createApolloClient } from './tools/apolloClient'
 
-export default (idToken: any) => {
+export default () => {
     const [client] = useState(createApolloClient());
 
     return (

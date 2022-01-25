@@ -1,71 +1,77 @@
-
-import { Grommet, Box, DataTable } from 'grommet';
+import { Grommet, Box, DataTable, Heading } from 'grommet';
 import { grommet } from 'grommet/themes';
 import { User, } from 'grommet-icons';
 import { useParams } from 'react-router-dom';
-import { orders } from '../data'
-import { orderColumns } from '../columns'
-import { useEffect } from 'react';
+import { orderColumns } from '../tools/columns'
 import Footer from './Footer';
 import Header from './Header';
-import { GET_ORDERS } from '../queries';
+import { GET_ORDERS } from '../tools/queries';
 import { useSubscription } from '@apollo/client';
-import { Order } from '../model';
+import { CustomerOrder } from '../tools/model';
+
+interface Props {
+    orders: CustomerOrder[]
+}
 
 const DetailPageQuery = () => {
     const { index } = useParams();
-
     const { loading, error, data } = useSubscription(GET_ORDERS, { variables: { customerID: index } });
 
+
     if (loading) {
-        return <span>Loading...</span>;
+        return <DetailPage orders={[]} />;
     }
     if (error) {
         console.error(error);
         return <span>Error!</span>;
     }
-
     return <DetailPage orders={data.orders} />;
 }
 
-const DetailPage = (props: any) => {
-    let data: Order[] = [];
-
-    props.orders.forEach((element: Order) => {
-        data.push(
-            {
-                id: element.id,
-                orderDate: element.orderDate,
-                amount: element.amount,
-                numberOfProducts: element.numberOfProducts,
-            },
+function existProps(props: Props) {
+    if (props.orders.length > 0) {
+        return (
+            <Box border={{ color: 'black', size: 'medium' }} align='center' pad='small' direction='row' justify='center'>
+                <User size='large' />
+                <Heading level={3}>{props.orders[0].customer.id}</Heading>
+                <Heading level={3}>{props.orders[0].customer.name}</Heading>
+                <Heading level={3}>{props.orders[0].customer.dateOfBirth}</Heading>
+                <Heading level={3}>{props.orders[0].customer.vip}</Heading>
+            </Box>
         )
-    });
+
+    }
+    return (
+        <div>
+            <Heading level='4' margin='medium'>Načítava...</Heading>
+            <Box border={{ color: 'black', size: 'medium' }} align='center' pad='small' direction='row' justify='center'>
+                <User size='large' />
+            </Box>
+
+        </div>
+    )
+}
+
+const DetailPage = (props: Props) => {
 
     return (
         <Grommet theme={grommet}>
 
             <Header text='Detail zákazníka' />
 
-            <Box border={{ color: 'black', size: 'medium' }} align='center' pad='medium' direction='row' justify='center'>
-                <User size='large' />
-                <h3>{props.orders[0].customer.id}  </h3>
-                <h3>{props.orders[0].customer.name}    </h3>
-                <h3>{props.orders[0].customer.dateOfBirth} </h3>
-                <h3>{props.orders[0].customer.vip} </h3>
-            </Box>
+            {existProps(props)}
 
-            <h2>Objednávky</h2>
+            <Heading level={2}>Objednávky</Heading>
 
             <Box align="center" pad="large">
                 <DataTable
                     columns={orderColumns}
-                    data={data}
+                    data={props.orders}
                 />
             </Box>
 
             <Footer />
-        </Grommet>
+        </Grommet >
     );
 }
 

@@ -1,6 +1,6 @@
 import { Button, Header } from "grommet"
 import { Home } from "grommet-icons"
-import { HeadProperty } from "../model"
+import { HeadProperty } from "../tools/model"
 
 export default (props: HeadProperty) => {
     return (
