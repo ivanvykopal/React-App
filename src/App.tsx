@@ -4,6 +4,7 @@ import DetailPage from './components/DetailPage';
 import { ApolloProvider } from '@apollo/client';
 import { useState } from 'react';
 import { createApolloClient } from './tools/apolloClient'
+import React from "react";
 
 const App = () => {
     const [client] = useState(createApolloClient());

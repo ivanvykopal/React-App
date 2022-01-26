@@ -8,6 +8,7 @@ import { useSubscription } from "@apollo/client";
 import { GET_CUSTOMERS } from '../tools/queries';
 import { CustomerAmout } from '../tools/model';
 import Loading from './Loading';
+import React from "react";
 
 interface Props {
   customers: CustomerAmout[]

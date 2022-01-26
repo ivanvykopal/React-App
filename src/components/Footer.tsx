@@ -1,5 +1,6 @@
 import { Button, Footer } from "grommet"
 import { Github } from "grommet-icons"
+import React from "react";
 
 const MyFooter = () => {
     return (

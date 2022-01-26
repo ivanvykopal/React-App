@@ -1,5 +1,6 @@
 import { Checkmark, Close, Icon } from "grommet-icons";
 import { ReactElement } from "react";
+import React from "react";
 
 export function convertDate(date: Date): string {
     return new Date(date).toLocaleDateString("sk-SK");

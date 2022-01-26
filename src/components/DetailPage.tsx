@@ -10,6 +10,7 @@ import { useSubscription } from '@apollo/client';
 import { CustomerOrder } from '../tools/model';
 import Loading from './Loading';
 import { convertDate, isVip } from '../tools/helpers';
+import React from "react";
 
 interface Props {
     orders: CustomerOrder[]
