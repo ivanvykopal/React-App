@@ -1,26 +1,19 @@
 import { Grommet, Box, DataTable, Grid, Heading, Text } from 'grommet';
 import { grommet } from 'grommet/themes';
 import { useNavigate } from 'react-router-dom';
-import { customerColumns } from '../tools/columns'
+import { customerColumns } from '../tools/columns';
 import Footer from './Footer';
 import Header from './Header';
-import { useSubscription } from "@apollo/client";
-import { GET_CUSTOMERS } from '../tools/queries';
-import { CustomerAmout } from '../tools/model';
 import Loading from './Loading';
-import React from "react";
-
-interface Props {
-  customers: CustomerAmout[]
-}
+import { MySubscriptionSubscription, useMySubscriptionSubscription } from '../graphql/generated';
 
 const MainPageQuery = () => {
-  const { loading, error, data } = useSubscription(GET_CUSTOMERS);
+  const { loading, error, data } = useMySubscriptionSubscription();
 
   if (loading) {
     return <MainPage customers={[]} />;
   }
-  if (error) {
+  if (error || !data?.customers) {
     console.error(error);
     return <Text>Error!</Text>;
   }
@@ -28,7 +21,7 @@ const MainPageQuery = () => {
   return <MainPage customers={data.customers} />;
 };
 
-function existProps(props: Props) {
+function existProps(props: MySubscriptionSubscription) {
   if (props.customers.length === 0) {
     return <Loading />
   }
@@ -37,7 +30,7 @@ function existProps(props: Props) {
   )
 }
 
-const MainPage = (props: Props) => {
+const MainPage = (props: MySubscriptionSubscription) => {
   const navigate = useNavigate();
 
   return (

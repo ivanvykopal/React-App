@@ -2,36 +2,29 @@ import { Grommet, Box, DataTable, Heading } from 'grommet';
 import { grommet } from 'grommet/themes';
 import { User, } from 'grommet-icons';
 import { useParams } from 'react-router-dom';
-import { creteOrderColumns } from '../tools/columns'
+import { creteOrderColumns } from '../tools/columns';
 import Footer from './Footer';
 import Header from './Header';
-import { GET_ORDERS } from '../tools/queries';
-import { useSubscription } from '@apollo/client';
-import { CustomerOrder } from '../tools/model';
 import Loading from './Loading';
 import { convertDate, isVip } from '../tools/helpers';
-import React from "react";
+import { MySubscription2Subscription, useMySubscription2Subscription } from '../graphql/generated';
 
-interface Props {
-    orders: CustomerOrder[]
-}
 
 const DetailPageQuery = () => {
     const { index } = useParams();
-    const { loading, error, data } = useSubscription(GET_ORDERS, { variables: { customerID: index } });
-
+    const { loading, error, data } = useMySubscription2Subscription({ variables: { customerID: Number(index) } });
 
     if (loading) {
         return <DetailPage orders={[]} />;
     }
-    if (error) {
+    if (error || !data?.orders) {
         console.error(error);
         return <span>Error!</span>;
     }
     return <DetailPage orders={data.orders} />;
 }
 
-function existProps(props: Props) {
+function existProps(props: MySubscription2Subscription) {
     if (props.orders.length > 0) {
         return (
             <Box justify='center' align='center'>
@@ -67,7 +60,7 @@ function existProps(props: Props) {
     )
 }
 
-const DetailPage = (props: Props) => {
+const DetailPage = (props: MySubscription2Subscription) => {
 
     let total: number = 0;
     props.orders.forEach((element) => { total += element.amount });

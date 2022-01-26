@@ -1,0 +1,13 @@
+schema: 
+  - https://chief-terrier-94.hasura.app/v1/graphql:
+      headers:
+        'x-hasura-admin-secret': 'eUmyqPMsjIjvueOwRA4BkwGK1pHPgu0zL15bMWIKRrmkc0ga3vb4Hq2oIx7yqr9r'
+documents: './src/**/*.graphql'
+generates:
+  ./src/graphql/generated.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-react-apollo
+    config:
+      withHooks: true

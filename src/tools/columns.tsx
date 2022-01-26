@@ -1,8 +1,9 @@
 import { ColumnConfig } from "grommet";
-import { Customer, CustomerAmout, Order, } from './model'
+import { Customer, CustomerAmount, Order, } from './model'
 import { convertDate, convertTimestamp, isVip, priceFormat } from "./helpers";
+import { Customers } from "../graphql/generated";
 
-export const customerColumns: ColumnConfig<CustomerAmout>[] = [
+export const customerColumns: ColumnConfig<CustomerAmount>[] = [
   {
     property: 'id',
     header: 'ID',

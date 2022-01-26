@@ -1,5 +1,4 @@
-import { Box, Heading } from "grommet"
-import React from "react";
+import { Box, Heading } from "grommet";
 
 const Loading = () => {
     return (

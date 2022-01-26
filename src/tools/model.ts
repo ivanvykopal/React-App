@@ -3,7 +3,7 @@ export interface Customer {
     name: string,
     dateOfBirth: Date,
     vip: boolean,
-    totalAmount: number,
+    totalAmount?: number,
 }
 
 export interface Order {
@@ -18,12 +18,13 @@ export interface CustomerOrder extends Order {
     customer: Customer
 }
 
-export interface CustomerAmout extends Customer {
+export interface CustomerAmount extends Customer {
     orders_aggregate: {
-        aggregate: {
-            sum: {
-                amount: number
+        aggregate?: {
+            sum?: {
+                amount?: number | null | undefined
             }
-        }
+            | null | undefined
+        } | null | undefined
     }
 }
