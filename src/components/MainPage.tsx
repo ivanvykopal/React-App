@@ -5,12 +5,12 @@ import { customerColumns } from '../tools/columns';
 import Footer from './Footer';
 import Header from './Header';
 import Loading from './Loading';
-import { MySubscriptionSubscription, useMySubscriptionSubscription } from '../graphql/generated';
+import { GetCustomersSubscription, useGetCustomersSubscription } from '../graphql/generated';
 import Filter from './Filter';
 import { useEffect, useState } from 'react';
 
 const MainPageQuery = () => {
-  const { loading, error, data } = useMySubscriptionSubscription();
+  const { loading, error, data } = useGetCustomersSubscription();
 
   if (loading) {
     return <MainPage customers={[]} />;
@@ -23,7 +23,7 @@ const MainPageQuery = () => {
   return <MainPage customers={data.customers} />;
 };
 
-function existProps(props: MySubscriptionSubscription) {
+function existProps(props: GetCustomersSubscription) {
   if (props.customers.length === 0) {
     return <Loading />
   }
@@ -32,7 +32,7 @@ function existProps(props: MySubscriptionSubscription) {
   )
 }
 
-const MainPage = (props: MySubscriptionSubscription) => {
+const MainPage = (props: GetCustomersSubscription) => {
   const navigate = useNavigate();
   const [value, setValue] = useState<string>('Filter');
   const [date, setDate] = useState<string>(new Date().toISOString());

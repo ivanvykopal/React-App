@@ -944,17 +944,31 @@ export type CustomerFieldsFragment = { __typename?: 'customers', id: number, nam
 
 export type OrdersFieldsFragment = { __typename?: 'orders', amount: any, id: number, numberOfProducts: number, orderDate: any };
 
-export type MySubscription2SubscriptionVariables = Exact<{
+export type GetOrdersSubscriptionVariables = Exact<{
   customerID: Scalars['Int'];
 }>;
 
 
-export type MySubscription2Subscription = { __typename?: 'subscription_root', orders: Array<{ __typename?: 'orders', amount: any, id: number, numberOfProducts: number, orderDate: any, customer: { __typename?: 'customers', id: number, name: string, dateOfBirth: any, vip: boolean } }> };
+export type GetOrdersSubscription = { __typename?: 'subscription_root', orders: Array<{ __typename?: 'orders', amount: any, id: number, numberOfProducts: number, orderDate: any, customer: { __typename?: 'customers', id: number, name: string, dateOfBirth: any, vip: boolean } }> };
 
-export type MySubscriptionSubscriptionVariables = Exact<{ [key: string]: never; }>;
+export type GetCustomersSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MySubscriptionSubscription = { __typename?: 'subscription_root', customers: Array<{ __typename?: 'customers', id: number, name: string, dateOfBirth: any, vip: boolean, orders_aggregate: { __typename?: 'orders_aggregate', aggregate?: { __typename?: 'orders_aggregate_fields', sum?: { __typename?: 'orders_sum_fields', amount?: any | null | undefined } | null | undefined } | null | undefined } }> };
+export type GetCustomersSubscription = { __typename?: 'subscription_root', customers: Array<{ __typename?: 'customers', id: number, name: string, dateOfBirth: any, vip: boolean, orders_aggregate: { __typename?: 'orders_aggregate', aggregate?: { __typename?: 'orders_aggregate_fields', sum?: { __typename?: 'orders_sum_fields', amount?: any | null | undefined } | null | undefined } | null | undefined } }> };
+
+export type GetCustomersFilterNameSubscriptionVariables = Exact<{
+  name?: InputMaybe<Order_By>;
+}>;
+
+
+export type GetCustomersFilterNameSubscription = { __typename?: 'subscription_root', customers: Array<{ __typename?: 'customers', id: number, name: string, dateOfBirth: any, vip: boolean, orders_aggregate: { __typename?: 'orders_aggregate', aggregate?: { __typename?: 'orders_aggregate_fields', sum?: { __typename?: 'orders_sum_fields', amount?: any | null | undefined } | null | undefined } | null | undefined } }> };
+
+export type GetCustomersFilterDateSubscriptionVariables = Exact<{
+  _lt?: InputMaybe<Scalars['date']>;
+}>;
+
+
+export type GetCustomersFilterDateSubscription = { __typename?: 'subscription_root', customers: Array<{ __typename?: 'customers', id: number, name: string, dateOfBirth: any, vip: boolean, orders_aggregate: { __typename?: 'orders_aggregate', aggregate?: { __typename?: 'orders_aggregate_fields', sum?: { __typename?: 'orders_sum_fields', amount?: any | null | undefined } | null | undefined } | null | undefined } }> };
 
 export const CustomerFieldsFragmentDoc = gql`
     fragment customerFields on customers {
@@ -972,8 +986,8 @@ export const OrdersFieldsFragmentDoc = gql`
   orderDate
 }
     `;
-export const MySubscription2Document = gql`
-    subscription MySubscription2($customerID: Int!) {
+export const GetOrdersDocument = gql`
+    subscription GetOrders($customerID: Int!) {
   orders(where: {customerID: {_eq: $customerID}}) {
     ...ordersFields
     customer {
@@ -985,29 +999,29 @@ export const MySubscription2Document = gql`
 ${CustomerFieldsFragmentDoc}`;
 
 /**
- * __useMySubscription2Subscription__
+ * __useGetOrdersSubscription__
  *
- * To run a query within a React component, call `useMySubscription2Subscription` and pass it any options that fit your needs.
- * When your component renders, `useMySubscription2Subscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetOrdersSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useGetOrdersSubscription` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useMySubscription2Subscription({
+ * const { data, loading, error } = useGetOrdersSubscription({
  *   variables: {
  *      customerID: // value for 'customerID'
  *   },
  * });
  */
-export function useMySubscription2Subscription(baseOptions: Apollo.SubscriptionHookOptions<MySubscription2Subscription, MySubscription2SubscriptionVariables>) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useSubscription<MySubscription2Subscription, MySubscription2SubscriptionVariables>(MySubscription2Document, options);
-}
-export type MySubscription2SubscriptionHookResult = ReturnType<typeof useMySubscription2Subscription>;
-export type MySubscription2SubscriptionResult = Apollo.SubscriptionResult<MySubscription2Subscription>;
-export const MySubscriptionDocument = gql`
-    subscription MySubscription {
+export function useGetOrdersSubscription(baseOptions: Apollo.SubscriptionHookOptions<GetOrdersSubscription, GetOrdersSubscriptionVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useSubscription<GetOrdersSubscription, GetOrdersSubscriptionVariables>(GetOrdersDocument, options);
+      }
+export type GetOrdersSubscriptionHookResult = ReturnType<typeof useGetOrdersSubscription>;
+export type GetOrdersSubscriptionResult = Apollo.SubscriptionResult<GetOrdersSubscription>;
+export const GetCustomersDocument = gql`
+    subscription GetCustomers {
   customers {
     ...customerFields
     orders_aggregate {
@@ -1022,23 +1036,97 @@ export const MySubscriptionDocument = gql`
     ${CustomerFieldsFragmentDoc}`;
 
 /**
- * __useMySubscriptionSubscription__
+ * __useGetCustomersSubscription__
  *
- * To run a query within a React component, call `useMySubscriptionSubscription` and pass it any options that fit your needs.
- * When your component renders, `useMySubscriptionSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetCustomersSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useGetCustomersSubscription` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useMySubscriptionSubscription({
+ * const { data, loading, error } = useGetCustomersSubscription({
  *   variables: {
  *   },
  * });
  */
-export function useMySubscriptionSubscription(baseOptions?: Apollo.SubscriptionHookOptions<MySubscriptionSubscription, MySubscriptionSubscriptionVariables>) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useSubscription<MySubscriptionSubscription, MySubscriptionSubscriptionVariables>(MySubscriptionDocument, options);
+export function useGetCustomersSubscription(baseOptions?: Apollo.SubscriptionHookOptions<GetCustomersSubscription, GetCustomersSubscriptionVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useSubscription<GetCustomersSubscription, GetCustomersSubscriptionVariables>(GetCustomersDocument, options);
+      }
+export type GetCustomersSubscriptionHookResult = ReturnType<typeof useGetCustomersSubscription>;
+export type GetCustomersSubscriptionResult = Apollo.SubscriptionResult<GetCustomersSubscription>;
+export const GetCustomersFilterNameDocument = gql`
+    subscription GetCustomersFilterName($name: order_by = asc) {
+  customers(order_by: {name: $name}) {
+    ...customerFields
+    orders_aggregate {
+      aggregate {
+        sum {
+          amount
+        }
+      }
+    }
+  }
 }
-export type MySubscriptionSubscriptionHookResult = ReturnType<typeof useMySubscriptionSubscription>;
-export type MySubscriptionSubscriptionResult = Apollo.SubscriptionResult<MySubscriptionSubscription>;
+    ${CustomerFieldsFragmentDoc}`;
+
+/**
+ * __useGetCustomersFilterNameSubscription__
+ *
+ * To run a query within a React component, call `useGetCustomersFilterNameSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useGetCustomersFilterNameSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCustomersFilterNameSubscription({
+ *   variables: {
+ *      name: // value for 'name'
+ *   },
+ * });
+ */
+export function useGetCustomersFilterNameSubscription(baseOptions?: Apollo.SubscriptionHookOptions<GetCustomersFilterNameSubscription, GetCustomersFilterNameSubscriptionVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useSubscription<GetCustomersFilterNameSubscription, GetCustomersFilterNameSubscriptionVariables>(GetCustomersFilterNameDocument, options);
+      }
+export type GetCustomersFilterNameSubscriptionHookResult = ReturnType<typeof useGetCustomersFilterNameSubscription>;
+export type GetCustomersFilterNameSubscriptionResult = Apollo.SubscriptionResult<GetCustomersFilterNameSubscription>;
+export const GetCustomersFilterDateDocument = gql`
+    subscription GetCustomersFilterDate($_lt: date = "") {
+  customers(where: {dateOfBirth: {_lt: $_lt}}) {
+    ...customerFields
+    orders_aggregate {
+      aggregate {
+        sum {
+          amount
+        }
+      }
+    }
+  }
+}
+    ${CustomerFieldsFragmentDoc}`;
+
+/**
+ * __useGetCustomersFilterDateSubscription__
+ *
+ * To run a query within a React component, call `useGetCustomersFilterDateSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useGetCustomersFilterDateSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCustomersFilterDateSubscription({
+ *   variables: {
+ *      _lt: // value for '_lt'
+ *   },
+ * });
+ */
+export function useGetCustomersFilterDateSubscription(baseOptions?: Apollo.SubscriptionHookOptions<GetCustomersFilterDateSubscription, GetCustomersFilterDateSubscriptionVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useSubscription<GetCustomersFilterDateSubscription, GetCustomersFilterDateSubscriptionVariables>(GetCustomersFilterDateDocument, options);
+      }
+export type GetCustomersFilterDateSubscriptionHookResult = ReturnType<typeof useGetCustomersFilterDateSubscription>;
+export type GetCustomersFilterDateSubscriptionResult = Apollo.SubscriptionResult<GetCustomersFilterDateSubscription>;

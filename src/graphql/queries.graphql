@@ -12,7 +12,7 @@ fragment ordersFields on orders {
     orderDate
 }
 
-subscription MySubscription2($customerID: Int!) {
+subscription GetOrders($customerID: Int!) {
       orders(where: {customerID: {_eq: $customerID}}) {
         ...ordersFields
         customer {
@@ -21,7 +21,7 @@ subscription MySubscription2($customerID: Int!) {
       }
     }
 
-subscription MySubscription {
+subscription GetCustomers {
     customers {
       ...customerFields
       orders_aggregate {
@@ -32,4 +32,30 @@ subscription MySubscription {
           }
         }
     }
+}
+
+subscription GetCustomersFilterName($name: order_by = asc) {
+  customers(order_by: {name: $name}) {
+    ...customerFields
+    orders_aggregate {
+      aggregate {
+        sum {
+          amount
+        }
+      }
+    }
+  }
+}
+
+subscription GetCustomersFilterDate($_lt: date = "") {
+  customers(where: {dateOfBirth: {_lt: $_lt}}) {
+    ...customerFields
+    orders_aggregate {
+      aggregate {
+        sum {
+          amount
+        }
+      }
+    }
+  }
 }
