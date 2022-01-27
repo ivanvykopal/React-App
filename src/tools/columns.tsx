@@ -1,7 +1,6 @@
 import { ColumnConfig } from "grommet";
 import { Customer, CustomerAmount, Order, } from './model'
-import { convertDate, convertTimestamp, isVip, priceFormat } from "./helpers";
-import { Customers } from "../graphql/generated";
+import { convertDate, convertPrice, convertTimestamp, isVip, priceFormat } from "./helpers";
 
 export const customerColumns: ColumnConfig<CustomerAmount>[] = [
   {
@@ -31,7 +30,7 @@ export const customerColumns: ColumnConfig<CustomerAmount>[] = [
   {
     property: 'orders_aggregate.aggregate.sum.amount',
     header: 'Suma objednávok',
-    render: (datum) => priceFormat(datum.orders_aggregate.aggregate.sum.amount),
+    render: (element) => convertPrice(element),
     align: "end"
   }
 ];

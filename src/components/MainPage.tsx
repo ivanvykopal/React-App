@@ -1,13 +1,34 @@
-import { Grommet, Box, DataTable, Grid, Heading, Text } from 'grommet';
+import { Grommet, Box, Grid, Heading, Text } from 'grommet';
 import { grommet } from 'grommet/themes';
-import { useNavigate } from 'react-router-dom';
-import { customerColumns } from '../tools/columns';
 import Footer from './Footer';
 import Header from './Header';
 import Loading from './Loading';
 import { GetCustomersSubscription, useGetCustomersSubscription } from '../graphql/generated';
 import Filter from './Filter';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { CustomerAmount } from '../tools/model';
+import { CustomerTable, CustomerTableFilterDate, CustomerTableFilterNameAsc, CustomerTableFilterNameDesc } from './CustomerTables';
+
+const Option = {
+  FILTER: 'Filter',
+  NAME_DESC: 'Meno zostupne',
+  NAME_ASC: 'Meno vzostupne',
+  DATE: 'Dátum',
+}
+
+
+function checkFilter(option: string, date: string, data: CustomerAmount[]): JSX.Element | undefined {
+  switch (option) {
+    case Option.FILTER:
+      return <CustomerTable data={data} />;
+    case Option.NAME_DESC:
+      return <CustomerTableFilterNameAsc />;
+    case Option.NAME_ASC:
+      return <CustomerTableFilterNameDesc />;
+    case Option.DATE:
+      return <CustomerTableFilterDate date={date} />;
+  }
+}
 
 const MainPageQuery = () => {
   const { loading, error, data } = useGetCustomersSubscription();
@@ -33,13 +54,9 @@ function existProps(props: GetCustomersSubscription) {
 }
 
 const MainPage = (props: GetCustomersSubscription) => {
-  const navigate = useNavigate();
   const [value, setValue] = useState<string>('Filter');
   const [date, setDate] = useState<string>(new Date().toISOString());
-
-  useEffect(() => {
-
-  }, [value, date])
+  let data: CustomerAmount[] = props.customers;
 
   return (
     <Grommet theme={grommet} full>
@@ -52,13 +69,7 @@ const MainPage = (props: GetCustomersSubscription) => {
 
         <Filter value={value} setValue={setValue} date={date} setDate={setDate} />
 
-        <Box align='left' pad='large'>
-          <DataTable
-            columns={customerColumns}
-            data={props.customers}
-            onClickRow={(datum) => navigate('/' + datum.datum.id)}
-          />
-        </Box>
+        {checkFilter(value, date, data)}
 
         {existProps(props)}
 
