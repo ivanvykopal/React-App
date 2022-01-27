@@ -6,6 +6,8 @@ import Footer from './Footer';
 import Header from './Header';
 import Loading from './Loading';
 import { MySubscriptionSubscription, useMySubscriptionSubscription } from '../graphql/generated';
+import Filter from './Filter';
+import { useEffect, useState } from 'react';
 
 const MainPageQuery = () => {
   const { loading, error, data } = useMySubscriptionSubscription();
@@ -32,15 +34,23 @@ function existProps(props: MySubscriptionSubscription) {
 
 const MainPage = (props: MySubscriptionSubscription) => {
   const navigate = useNavigate();
+  const [value, setValue] = useState<string>('Filter');
+  const [date, setDate] = useState<string>(new Date().toISOString());
+
+  useEffect(() => {
+
+  }, [value, date])
 
   return (
     <Grommet theme={grommet} full>
-      <Grid fill rows={["auto", "auto", "flex", "auto", "auto"]}>
+      <Grid fill rows={["auto", "auto", "auto", "flex", "auto", "auto"]}>
         <Header />
 
-        <Box align='center' justify='center' border={{ color: 'black', side: 'bottom' }}>
+        <Box align='center' justify='center'>
           <Heading level='2'>Zoznam zákazníkov</Heading>
         </Box>
+
+        <Filter value={value} setValue={setValue} date={date} setDate={setDate} />
 
         <Box align='left' pad='large'>
           <DataTable
