@@ -2,14 +2,22 @@ import { Box, DateInput, Select } from "grommet"
 import { Filter } from "grommet-icons";
 import FilterProps from "../tools/model";
 
-export function checkSelect(option: string, setDate: React.Dispatch<React.SetStateAction<string>>, date: string): JSX.Element {
+
+
+export function checkSelect(option: string, setDate: React.Dispatch<React.SetStateAction<string | undefined>>, date: string | undefined): JSX.Element {
+  const onChange = (event: any) => {
+    const nextValue = event.value;
+    console.log('onChange', nextValue);
+    setDate(nextValue);
+  };
+
   if (option === 'Dátum') {
     return (
       <Box align='center' justify='end' gap='large' direction='row'>
         <DateInput
           format="dd.mm.yyyy"
           value={date}
-          onChange={({ value }) => { setDate(value.toString()) }}
+          onChange={onChange}
         />
       </Box>
     )

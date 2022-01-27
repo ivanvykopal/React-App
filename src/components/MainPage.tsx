@@ -17,7 +17,7 @@ const Option = {
 }
 
 
-function checkFilter(option: string, date: string, data: CustomerAmount[]): JSX.Element | undefined {
+function checkFilter(option: string, date: string | undefined, data: CustomerAmount[]): JSX.Element | undefined {
   switch (option) {
     case Option.FILTER:
       return <CustomerTable data={data} />;
@@ -55,7 +55,7 @@ function existProps(props: GetCustomersSubscription) {
 
 const MainPage = (props: GetCustomersSubscription) => {
   const [value, setValue] = useState<string>('Filter');
-  const [date, setDate] = useState<string>(new Date().toISOString());
+  const [date, setDate] = useState<string>();
   let data: CustomerAmount[] = props.customers;
 
   return (

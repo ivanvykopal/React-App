@@ -7,18 +7,18 @@ import { createApolloClient } from './tools/apolloClient'
 import React from "react";
 
 const App = () => {
-    const [client] = useState(createApolloClient());
+  const [client] = useState(createApolloClient());
 
-    return (
-        <ApolloProvider client={client}>
-            <BrowserRouter>
-                <Routes>
-                    <Route path="/:index" element={<DetailPage />} />
-                    <Route path="/" element={<MainPage />} />
-                </Routes>
-            </BrowserRouter>
-        </ApolloProvider>
-    )
+  return (
+    <ApolloProvider client={client}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/:index" element={<DetailPage />} />
+          <Route path="/" element={<MainPage />} />
+        </Routes>
+      </BrowserRouter>
+    </ApolloProvider>
+  )
 }
 
 export default App;

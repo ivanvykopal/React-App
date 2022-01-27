@@ -32,6 +32,6 @@ export interface CustomerAmount extends Customer {
 export default interface FilterProps {
   value: string,
   setValue: React.Dispatch<React.SetStateAction<string>>,
-  date: string,
-  setDate: React.Dispatch<React.SetStateAction<string>>,
+  date: string | undefined,
+  setDate: React.Dispatch<React.SetStateAction<string | undefined>>,
 }
